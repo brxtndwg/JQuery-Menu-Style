@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>jQuery MagicLine Navigation</title>
+    <link
+      href="style/scafold.css"
+      media="screen"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link
+      href="style/structure.css"
+      media="screen"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link
+      href="style/theme.css"
+      media="screen"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      $(function() {
+        var $el,
+          leftPos,
+          topPos,
+          newWidth,
+          $mainNav = $("#example-one"); //Set up variables including current left offset of the navigation
+
+        $mainNav.append("<li id='magic-line'></li>"); //insert the line that will be scrolling accross the menu
+
+        var $magicLine = $("#magic-line");
+
+        $magicLine
+          .width($(".current_page_item").width()) //width of element that poccesses the 'current_page_item' class
+          .css("left", $(".current_page_item a").position().left)
+
+          .data("origLeft", $magicLine.position().left) //save the 'LEFT position' of the current LI
+
+          .data("origWidth", $magicLine.width()); //save the width of the selected LI
+
+        $("#example-one li a").hover(
+          function() {
+            //
+            $el = $(this);
+            leftPos = $el.position().left;
+            topPos = $el.position().top;
+            newWidth = $el.parent().width();
+
+            $magicLine.stop().animate({
+              left: leftPos,
+              width: newWidth
+            });
+          },
+          function() {
+            $magicLine.stop().animate({
+              left: $magicLine.data("origLeft"),
+              width: $magicLine.data("origWidth")
+            });
+          }
+        );
+      });
+    </script>
+
+    <style type="text/css">
+      .nav-wrap {
+        margin: 50px auto 20px auto;
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+        height: 30px;
+      }
+
+      #example-one {
+        margin: 0 auto;
+        list-style: none;
+        position: relative;
+        width: 960px;
+      }
+      #example-one li {
+        display: inline;
+      }
+      #example-one li a {
+        color: rgb(14, 12, 12);
+        font-size: 14px;
+        display: block;
+        float: left;
+        padding: 6px 10px 4px 10px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      #example-one li a:hover {
+        color: red;
+      }
+
+      #magic-line {
+        position: absolute;
+        bottom: -25px;
+        left: 0;
+        width: 100px;
+        height: 2px;
+        background: maroon;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header"></div>
+
+      <div class="nav-wrap">
+        <ul class="group" id="example-one">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Buy Tickets</a></li>
+          <li><a href="#">Group Sales</a></li>
+          <li class="current_page_item"><a href="#">Reviews</a></li>
+          <li><a href="#">The Show</a></li>
+          <li><a href="#">Videos</a></li>
+          <li><a href="#">Photos</a></li>
+          <li><a href="#">Magic Shop</a></li>
+        </ul>
+      </div>
+
+      <div id="content">
+        <!-- h2>The Idea</h2>
+
+        <p>
+          The idea is to have a highlight of some kind (a background or an
+          underline) follow you around as you mouse over the different links in
+          the navigation. This will happen with jQuery and it’s animation
+          abilities. As such, the “magic line” will only be appended via
+          JavaScript. Once added to the list and styled, as you mouse over the
+          different links, it figures out the left positioning and the width and
+          animates to match.
+        </p -->
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>
